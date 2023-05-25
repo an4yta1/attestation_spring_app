@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Главная</title>
+    </head>
+
+    <body>
+        <a th:href="@{/products}">Товары</a>
+        <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Корзина</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Заказы</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Все заказы (admin)</a>
+        
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
+            <input type="submit" value="Выход">
+        </form>
+    </body>
+</html>

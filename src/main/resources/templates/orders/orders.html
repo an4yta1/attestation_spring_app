@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Заказы</title>
+    </head>
+
+    <body>
+        <header>
+            <a th:href="@{/products}">Товары</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Вход</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Корзина</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Заказы</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Все заказы (admin)</a>
+            
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выход">
+            </form>
+        </header>
+
+        <h1>Заказы</h1>
+
+        <div>
+            <ul>
+                <li th:each="order : ${orders}">
+                    <p th:text="${order.id} + ' (' + ${#temporals.format(order.createdAt, 'dd-MM-yyyy HH:mm')} + ') [' + ${order.status} + ']:'"></p>
+
+                    <ul>
+                        <li th:each="ordersProductsEntity : ${order.ordersProductsEntities}" th:text="${ordersProductsEntity.productEntity.title}"></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

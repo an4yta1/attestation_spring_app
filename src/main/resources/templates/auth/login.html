@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Вход</title>
+    </head>
+
+    <body>
+        <header>
+            <a th:href="@{/products}">Товары</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Вход</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Корзина</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Заказы</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Все заказы (admin)</a>
+            
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выход">
+            </form>
+        </header>
+
+        <div>
+            <h3>Не зарегистрированы?</h3>
+        
+            <form th:action="@{/auth/register}" th:method="GET">
+                <input type="submit" value="Регистрация">
+            </form>
+        </div>
+        
+        <div>
+            <h1>Вход</h1>
+        
+            <form class="auth" name="login_form" th:action="@{/login}" th:method="POST">
+                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden">
+        
+                <label for="username">Имя пользователя:</label>
+                <input id="username" name="username" type="text">
+        
+                <label for="password">Пароль:</label>
+                <input id="password" name="password" type="password">
+        
+                <input type="submit" value="Войти">
+        
+                <p style="color: red" th:if="${param.error}">Неверные имя пользователя и/или пароль.</p>
+            </form>
+        </div>
+    </body>
+</html>

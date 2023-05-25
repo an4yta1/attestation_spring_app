@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Информация о товаре</title>
+    </head>
+
+    <body>
+        <header>
+            <a th:href="@{/products}">Товары</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Вход</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Корзина</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Заказы</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Все заказы (admin)</a>
+            
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выход">
+            </form>
+        </header>
+
+        <h1>Информация о товаре</h1>
+        
+        <div>
+            <img th:src="@{'/images/' + ${product.fileName}}" width="512px">
+    
+            <p th:text="${product.title}">Товар</p>
+            <p th:text="${product.price} + ' руб.'">Цена</p>
+    
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/products/{id}/add(id=${product.id})}" th:method="POST"
+                      th:unless="${is_present == true}">
+                    <input type="submit" value="Добавить в корзину">
+                </form>
+    
+                <form sec:authorize="hasRole('ADMIN')" th:action="@{/products/{id}/edit(id=${product.id})}" th:method="GET">
+                    <input type="submit" value="Редактировать товар (admin)">
+                </form>
+    
+                <form sec:authorize="hasRole('ADMIN')" th:action="@{/products/{id}(id=${product.id})}" th:method="DELETE">
+                    <input type="submit" value="Удалить товар (admin)">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

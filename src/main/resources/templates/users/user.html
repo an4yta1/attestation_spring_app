@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Информация о заказе</title>
+    </head>
+
+    <body>
+        <header>
+            <a th:href="@{/products}">Товары</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Вход</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Корзина</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Заказы</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Все заказы (admin)</a>
+            
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выход">
+            </form>
+        </header>
+
+        <h1>Информация о пользователе</h1>
+
+        <form th:action="@{/users/{id}(id=${user.id})}" th:method="PATCH">
+            <p th:text="'Идентификатор: ' + ${user.id}"></p>
+            <p th:text="'Имя пользователя: ' + ${user.username}"></p>
+
+            <div>
+                <p>Роль:</p>
+
+                <select id="role" name="role">
+                    <option th:selected="${'ROLE_USER' == user.role}" th:text="пользователь" th:value="ROLE_USER"></option>
+                    <option th:selected="${'ROLE_ADMIN' == user.role}" th:text="администратор"
+                            th:value="ROLE_ADMIN"></option>
+                </select>
+            </div>
+
+            <input type="submit" value="Сохранить">
+        </form>
+    </body>
+</html>

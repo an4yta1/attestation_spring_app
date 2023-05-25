@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Добавить товар</title>
+    </head>
+
+    <body>
+        <header>
+            <a th:href="@{/products}">Товары</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Вход</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Корзина</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Заказы</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Все заказы (admin)</a>
+            
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Выход">
+            </form>
+        </header>
+
+        <h1>Добавить товар</h1>
+
+        <form enctype="multipart/form-data" name="product_add_form" th:action="@{/products/add}" th:method="POST" th:object="${product}">
+            <label for="image">Изображение:</label>
+            <input accept="image/png, image/jpeg" id="image" name="image" th:field="*{multipartFile}" type="file" value="Выберите файл">
+
+            <label for="title">Назавание товара:</label>
+            <input id="title" name="title" th:field="*{title}" type="text">
+            <span style="color: red" th:errors="*{title}" th:if="@{#fields.hasErrors('title')}">Ошибки в названии товара.</span>
+
+            <label for="price">Цена:</label>
+            <input id="price" name="price" th:field="*{price}" type="text">
+            <span style="color: red" th:errors="*{price}" th:if="@{#fields.hasErrors('price')}">Ошибки в цене.</span>
+
+            <input type="submit" value="Добавить">
+        </form>
+    </body>
+</html>
