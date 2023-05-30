@@ -1,41 +1,36 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Регистрация</title>
-    </head>
+<!DOCTYPE html>
 
-    <body>
-        <header>
-            <a th:href="@{/products}">Товары</a>
-            <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Вход</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Корзина</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Заказы</a>
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Все заказы (admin)</a>
-            
-            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
-                <input type="submit" value="Выход">
-            </form>
-        </header>
+<html layout:decorate="~{layouts/layout}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Регистрация</title>
+	<link href="../../static/css/auth.css" media="all" rel="stylesheet" th:href="@{/css/auth.css}" type="text/css">
+</head>
 
-        <h1>Регистрация</h1>
-        
-        <form name="registration_form" th:action="@{/auth/register}" th:method="POST" th:object="${user}">
-            <label for="username">Имя пользователя:</label>
-            <input id="username" name="username" th:field="*{username}" type="text">
-            <span style="color: red" th:errors="*{username}" th:if="@{#fields.hasErrors('username')}">Ошибки в имени пользователя.</span>
-    
-            <label for="password">Пароль:</label>
-            <input id="password" name="password" th:field="*{password}" type="password">
-            <span style="color: red" th:errors="*{password}"
-                  th:if="@{#fields.hasErrors('password')}">Ошибки в пароле.</span>
-    
-            <label for="confirmed_password">Подтверждения пароля:</label>
-            <input id="confirmed_password" name="confirmed_password" th:field="*{confirmedPassword}" type="password">
-            <span style="color: red" th:errors="*{confirmedPassword}" th:if="@{#fields.hasErrors('confirmedPassword')}">Ошибки в подтверждении пароля.</span>
-    
-            <input type="submit" value="Зарегистрироваться">
-        </form>
-    </body>
+<body>
+<div layout:fragment="sidebar">
+
+</div>
+
+<div layout:fragment="content">
+	<h1>Регистрация</h1>
+
+	<form class="auth" name="registration_form" th:action="@{/auth/register}" th:method="POST" th:object="${user}">
+		<label for="username">Имя пользователя:</label>
+		<input id="username" name="username" th:field="*{username}" type="text">
+		<span style="color: red" th:errors="*{username}" th:if="@{#fields.hasErrors('username')}">Ошибки в имени пользователя.</span>
+
+		<label for="password">Пароль:</label>
+		<input id="password" name="password" th:field="*{password}" type="password">
+		<span style="color: red" th:errors="*{password}"
+		      th:if="@{#fields.hasErrors('password')}">Ошибки в пароле.</span>
+
+		<label for="confirmed_password">Подтверждения пароля:</label>
+		<input id="confirmed_password" name="confirmed_password" th:field="*{confirmedPassword}" type="password">
+		<span style="color: red" th:errors="*{confirmedPassword}" th:if="@{#fields.hasErrors('confirmedPassword')}">Ошибки в подтверждении пароля.</span>
+
+		<input type="submit" value="Зарегистрироваться">
+	</form>
+</div>
+</body>
 </html>

@@ -25,6 +25,8 @@ public class ProductEntity {
     private long fileSize;
     @Column(name = "title")
     private String title;
+    @Column(name = "description")
+    private String description;
     @Column(name = "price")
     private BigDecimal price;
     @OneToMany(mappedBy = "productEntity")
@@ -35,28 +37,30 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-    public ProductEntity(String fileName, String filePath, String fileType, long fileSize, String title, BigDecimal price) {
+    public ProductEntity(String fileName, String filePath, String fileType, long fileSize, String title, String description, BigDecimal price) {
         this.fileName = fileName;
         this.filePath = filePath;
         this.fileType = fileType;
         this.fileSize = fileSize;
         this.title = title;
+        this.description = description;
         this.price = price;
     }
 
-    public ProductEntity(int id, String fileName, String filePath, String fileType, long fileSize, String title, BigDecimal price) {
+    public ProductEntity(int id, String fileName, String filePath, String fileType, long fileSize, String title, String description, BigDecimal price) {
         this.id = id;
         this.fileName = fileName;
         this.filePath = filePath;
         this.fileType = fileType;
         this.fileSize = fileSize;
         this.title = title;
+        this.description = description;
         this.price = price;
     }
 
     @Contract(value = "_ -> new", pure = true)
     public static @NotNull ProductDTOO convertToProductDTOO(@NotNull ProductEntity productEntity) {
-        return new ProductDTOO(productEntity.id, productEntity.fileName, productEntity.title, productEntity.price);
+        return new ProductDTOO(productEntity.id, productEntity.fileName, productEntity.title, productEntity.description, productEntity.price);
     }
 
     public int getId() {
@@ -105,6 +109,14 @@ public class ProductEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getPrice() {

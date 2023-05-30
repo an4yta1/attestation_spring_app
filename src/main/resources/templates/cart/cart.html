@@ -1,50 +1,37 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Корзина</title>
-    </head>
+<html layout:decorate="~{layouts/layout}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Корзина</title>
+	<link href="../../static/css/cart.css" media="all" rel="stylesheet" th:href="@{/css/cart.css}" type="text/css">
+</head>
 
-    <body>
-        <header>
-            <a th:href="@{/products}">Товары</a>
-            <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Вход</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Корзина</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Заказы</a>
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Все заказы (admin)</a>
-            
-            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
-                <input type="submit" value="Выход">
-            </form>
-        </header>
+<body>
+<div layout:fragment="sidebar">
+	<h3>Действия</h3>
 
-        <div>
-            <h3>Действия</h3>
-        
-            <form th:action="@{/cart/order}" th:method="GET">
-                <input type="submit" value="Оформить заказ">
-            </form>
-        
-            <form th:action="@{/cart/clean}" th:method="GET">
-                <input type="submit" value="Очистить корзину">
-            </form>
-        </div>
-        
-        <div>
-            <h1>Корзина</h1>
-        
-            <div>
-                <div th:each="product : ${products}">
-                    <img th:src="@{'/images/' + ${product.fileName}}" width="256px">
-                    <p><a th:href="@{/products/{id}(id=${product.id})}" th:text="${product.title}">Товар</a></p>
-                    <p th:text="${product.price} + ' руб.'">Цена</p>
-        
-                    <form th:action="@{/cart/{id}(id=${product.id})}" th:method="DELETE">
-                        <input type="submit" value="Удалить">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </body>
+	<form th:action="@{/cart/order}" th:method="GET">
+		<input type="submit" value="Оформить заказ">
+	</form>
+
+	<form th:action="@{/cart/clean}" th:method="GET">
+		<input type="submit" value="Очистить корзину">
+	</form>
+</div>
+
+<div layout:fragment="content">
+	<h1>Корзина</h1>
+
+	<div class="cart">
+		<div th:each="product : ${products}">
+			<img th:src="@{'/images/' + ${product.fileName}}" width="256px">
+			<p><a th:href="@{/products/{id}(id=${product.id})}" th:text="${product.title}">Товар</a></p>
+			<p th:text="${product.price} + ' руб.'">Цена</p>
+
+			<form th:action="@{/cart/{id}(id=${product.id})}" th:method="DELETE">
+				<input type="submit" value="Удалить">
+			</form>
+		</div>
+	</div>
+</div>
+</body>
 </html>

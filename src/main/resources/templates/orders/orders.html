@@ -1,36 +1,30 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Заказы</title>
-    </head>
+<html layout:decorate="~{layouts/layout}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Заказы</title>
+	<link href="../../static/css/orders.css" media="all" rel="stylesheet" th:href="@{/css/orders.css}" type="text/css">
+</head>
 
-    <body>
-        <header>
-            <a th:href="@{/products}">Товары</a>
-            <a sec:authorize="isAnonymous()" th:href="@{/auth/login}">Вход</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Корзина</a>
-            <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Заказы</a>
-            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/orders}">Все заказы (admin)</a>
-            
-            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
-                <input type="submit" value="Выход">
-            </form>
-        </header>
+<body>
+<div layout:fragment="sidebar">
 
-        <h1>Заказы</h1>
+</div>
 
-        <div>
-            <ul>
-                <li th:each="order : ${orders}">
-                    <p th:text="${order.id} + ' (' + ${#temporals.format(order.createdAt, 'dd-MM-yyyy HH:mm')} + ') [' + ${order.status} + ']:'"></p>
+<div layout:fragment="content">
+	<h1>Заказы</h1>
 
-                    <ul>
-                        <li th:each="ordersProductsEntity : ${order.ordersProductsEntities}" th:text="${ordersProductsEntity.productEntity.title}"></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </body>
+	<div class="orders">
+		<ul>
+			<li th:each="order : ${orders}">
+				<p th:text="${order.id} + ' (' + ${#temporals.format(order.createdAt, 'dd-MM-yyyy HH:mm')} + ') [' + ${order.status} + ']:'"></p>
+
+				<ul>
+					<li th:each="ordersProductsEntity : ${order.ordersProductsEntities}"
+					    th:text="${ordersProductsEntity.productEntity.title}"></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</body>
 </html>

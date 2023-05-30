@@ -14,6 +14,7 @@ public class ProductDTIO {
     private MultipartFile multipartFile;
     @Size(min = 4, max = 256, message = "Количество символов в названии должно варьироваться от 4-х до 256-ти.")
     private String title;
+    private String description;
     @Positive(message = "Цена должна быть положительным числом.")
     private BigDecimal price;
 
@@ -21,9 +22,10 @@ public class ProductDTIO {
 
     }
 
-    public ProductDTIO(MultipartFile multipartFile, String title, BigDecimal price) {
+    public ProductDTIO(MultipartFile multipartFile, String title, String description, BigDecimal price) {
         this.multipartFile = multipartFile;
         this.title = title;
+        this.description = description;
         this.price = price;
     }
 
@@ -36,6 +38,7 @@ public class ProductDTIO {
                 productDTIO.multipartFile.getContentType(),
                 productDTIO.multipartFile.getSize(),
                 productDTIO.title,
+                productDTIO.description,
                 productDTIO.price
         );
     }
@@ -50,6 +53,7 @@ public class ProductDTIO {
                 productDTIO.multipartFile.getContentType(),
                 productDTIO.multipartFile.getSize(),
                 productDTIO.title,
+                productDTIO.description,
                 productDTIO.price
         );
     }
@@ -68,6 +72,14 @@ public class ProductDTIO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getPrice() {

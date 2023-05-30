@@ -1,0 +1,44 @@
+.sidebar form {
+    display: flex;
+    flex-flow: column;
+}
+
+.sidebar form * {
+    margin-top: 1rem;
+}
+
+.sidebar form input {
+    border: 1px solid #1d7b53;
+}
+
+.sidebar form *:first-child {
+    margin-top: 0;
+}
+
+.products {
+    margin-top: 3rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.products div {
+    flex-grow: 1;
+    max-width: 45%;
+    display: flex;
+    flex-flow: column;
+    gap: .5rem;
+}
+
+.products div img {
+    align-self: center;
+}
+
+.products div img + p {
+    margin-top: 1rem;
+}
+
+#add_product_admin {
+    margin-top: 2rem;
+}

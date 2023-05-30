@@ -6,16 +6,18 @@ public class ProductDTOO {
     private int id;
     private String fileName;
     private String title;
+    private String description;
     private BigDecimal price;
 
     public ProductDTOO() {
 
     }
 
-    public ProductDTOO(int id, String fileName, String title, BigDecimal price) {
+    public ProductDTOO(int id, String fileName, String title, String description, BigDecimal price) {
         this.id = id;
         this.fileName = fileName;
         this.title = title;
+        this.description = description;
         this.price = price;
     }
 
@@ -41,6 +43,14 @@ public class ProductDTOO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getPrice() {

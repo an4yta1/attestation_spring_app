@@ -121,7 +121,6 @@ public class ProductService {
         Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
 
         return productEntityOptional.map(ProductEntity::convertToProductDTOO).orElse(null);
-
     }
 
     public Optional<ProductEntity> findByIdOpt(int id) {
